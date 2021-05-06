@@ -95,6 +95,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.m_img_list = []
         self.dir_name = None
         self.label_hist = []
+        self.predefined_classes = []
         self.last_open_dir = None
         self.cur_img_idx = 0
         self.img_count = 1
@@ -111,7 +112,7 @@ class MainWindow(QMainWindow, WindowMixin):
         self.load_predefined_classes(default_prefdef_class_file)
 
         # Main widgets and related state.
-        self.label_dialog = LabelDialog(parent=self, list_item=self.label_hist)
+        self.label_dialog = LabelDialog(parent=self, list_item=self.predefined_classes)
 
         self.items_to_shapes = {}
         self.shapes_to_items = {}
@@ -1516,10 +1517,10 @@ class MainWindow(QMainWindow, WindowMixin):
             with codecs.open(predef_classes_file, 'r', 'utf8') as f:
                 for line in f:
                     line = line.strip()
-                    if self.label_hist is None:
-                        self.label_hist = [line]
+                    if self.predefined_classes is None:
+                        self.predefined_classes = [line]
                     else:
-                        self.label_hist.append(line)
+                        self.predefined_classes.append(line)
 
     def load_pascal_xml_by_filename(self, xml_path):
         if self.file_path is None:
@@ -1542,6 +1543,12 @@ class MainWindow(QMainWindow, WindowMixin):
 
         self.set_format(FORMAT_YOLO)
         t_yolo_parse_reader = YoloReader(txt_path, self.image)
+        classes = t_yolo_parse_reader.get_classes()
+        if classes is not None and len(classes) > 0:
+            self.label_hist = classes
+        else:
+            self.label_hist = self.predefined_classes
+        self.label_dialog = LabelDialog(parent=self, list_item=self.label_hist)
         shapes = t_yolo_parse_reader.get_shapes()
         print(shapes)
         self.load_labels(shapes)

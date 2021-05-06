@@ -113,6 +113,9 @@ class YoloReader:
         # except:
         #     pass
 
+    def get_classes(self):
+        return self.classes
+
     def get_shapes(self):
         return self.shapes
 
