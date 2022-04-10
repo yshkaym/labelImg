@@ -34,6 +34,16 @@ by `ImageNet <http://www.image-net.org/>`__.  Besides, it also supports YOLO and
 Installation
 ------------------
 
+Get from PyPI but only python3.0 or above
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This is the simplest (one-command) install method on modern Linux distributions such as Ubuntu and Fedora.
+
+.. code:: shell
+
+    pip3 install labelImg
+    labelImg
+    labelImg [IMAGE_PATH] [PRE-DEFINED CLASS FILE]
+
 
 Build from source
 ~~~~~~~~~~~~~~~~~
@@ -84,7 +94,7 @@ Virtualenv can avoid a lot of the QT / Python version issues
 
     brew install python3
     pip3 install pipenv
-    pipenv run pip install pyqt5==5.12.1 lxml
+    pipenv run pip install pyqt5==5.15.2 lxml
     pipenv run make qt5py3
     pipenv run python3 labelImg.py
     [Optional] rm -rf build dist; python setup.py py2app -A;mv "dist/labelImg.app" /Applications
@@ -109,6 +119,15 @@ Open cmd and go to the `labelImg <#labelimg>`__ directory
     python labelImg.py
     python labelImg.py [IMAGE_PATH] [PRE-DEFINED CLASS FILE]
 
+If you want to package it into a separate EXE file
+
+.. code:: shell
+
+    Install pyinstaller and execute:
+    
+    pip install pyinstaller
+    pyinstaller --hidden-import=pyqt5 --hidden-import=lxml -F -n "labelImg" -c labelImg.py -p ./libs -p ./
+
 Windows + Anaconda
 ^^^^^^^^^^^^^^^^^^
 
@@ -123,17 +142,6 @@ Open the Anaconda Prompt and go to the `labelImg <#labelimg>`__ directory
     pyrcc5 -o libs/resources.py resources.qrc
     python labelImg.py
     python labelImg.py [IMAGE_PATH] [PRE-DEFINED CLASS FILE]
-
-Get from PyPI but only python3.0 or above
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-This is the simplest (one-command) install method on modern Linux distributions such as Ubuntu and Fedora.
-
-.. code:: shell
-
-    pip3 install labelImg
-    labelImg
-    labelImg [IMAGE_PATH] [PRE-DEFINED CLASS FILE]
-
 
 Use Docker
 ~~~~~~~~~~~~~~~~~
@@ -201,6 +209,18 @@ Create pre-defined classes
 You can edit the
 `data/predefined\_classes.txt <https://github.com/tzutalin/labelImg/blob/master/data/predefined_classes.txt>`__
 to load pre-defined classes
+
+Annotation visualization
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Copy the existing lables file to same folder with the images. The labels file name must be same with image file name.
+
+2. Click File and choose 'Open Dir' then Open the image folder.
+
+3. Select image in File List, it will appear the bounding box and label for all objects in that image.
+
+(Choose Display Labels mode in View to show/hide lablels)
+
 
 Hotkeys
 ~~~~~~~
